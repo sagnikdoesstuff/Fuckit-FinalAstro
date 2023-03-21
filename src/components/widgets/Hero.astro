@@ -10,7 +10,9 @@ interface CallToAction {
 
 export interface Props {
   title?: string;
+  titlemini?: string;
   subtitle?: string;
+  subtitleintro?: string;
   callToAction?: string | CallToAction;
   callToAction2?: string | CallToAction;
   image?: string | any; // TODO: find HTMLElementProps
@@ -18,6 +20,8 @@ export interface Props {
 
 const {
   title = await Astro.slots.render('title'),
+  titlemini = await Astro.slots.render('titlemini'),
+  subtitleintro = await Astro.slots.render('subtitleintro'),
   subtitle = await Astro.slots.render('subtitle'),
   content = await Astro.slots.render('content'),
   callToAction = await Astro.slots.render('callToAction'),
@@ -26,21 +30,29 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative md:-mt-[76px]">
+<section class="relative h-screen align-middle">
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="pt-0 md:pt-[76px] pointer-events-none"></div>
-    <div class="py-12 md:py-20">
-      <div class="text-center pb-10 md:pb-16 max-w-screen-lg mx-auto">
+    <div class="pt-0 pointer-events-none"></div>
+      <div class="text-center pb-10 md:pb-16 max-w-screen-lg mx-auto h-screen flex flex-col justify-center">
+        {subtitleintro && <p class="text-xl text-muted mb-6 dark:text-slate-300" set:html={subtitleintro} />}
         {
           title && (
             <h1
-              class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4 font-heading dark:text-gray-200"
+              class="text-4xl lg:text-6xl sm:text-2xl font-bold uppercase leading-tighter tracking-tighter mb-4 font-heading dark:text-gray-200"
               set:html={title}
             />
           )
         }
-        <div class="max-w-3xl mx-auto">
+        {
+          titlemini && (
+            <h1
+              class="font-bold uppercase leading-tighter tracking-tighter mb-4 font-heading dark:text-gray-200 lg:text-9xl md:text-8xl text-6xl" 
+              set:html={titlemini}
+            />
+          )
+        }
+        <div>
           {subtitle && <p class="text-xl text-muted mb-6 dark:text-slate-300" set:html={subtitle} />}
           <div class="max-w-xs sm:max-w-md m-auto flex flex-nowrap flex-col sm:flex-row sm:justify-center gap-4">
             {
@@ -50,11 +62,7 @@ const {
                     <Fragment set:html={callToAction} />
                   ) : (
                     <a class="btn btn-primary sm:mb-0 w-full" href={callToAction?.href} target="_blank" rel="noopener">
-                      {callToAction?.icon && (
-                        <>
-                          <Icon name={callToAction.icon} class="w-5 h-5 mr-1 -ml-1.5" />{' '}
-                        </>
-                      )}
+                      
                       {callToAction?.text}
                     </a>
                   )}
@@ -83,28 +91,5 @@ const {
         </div>
         {content && <Fragment set:html={content} />}
       </div>
-      <div>
-        {
-          image && (
-            <div class="relative m-auto max-w-5xl">
-              {typeof image === 'string' ? (
-                <Fragment set:html={image} />
-              ) : (
-                <Picture
-                  class="mx-auto rounded-md w-full"
-                  widths={[400, 768, 1024, 2040]}
-                  sizes="(max-width: 767px) 400px, (max-width: 1023px) 768px, (max-width: 2039px) 1024px, 2040px"
-                  aspectRatio={1024 / 576}
-                  loading="eager"
-                  width={1024}
-                  height={576}
-                  {...image}
-                />
-              )}
-            </div>
-          )
-        }
-      </div>
-    </div>
   </div>
 </section>
