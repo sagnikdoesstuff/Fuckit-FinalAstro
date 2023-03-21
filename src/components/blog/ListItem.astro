@@ -43,23 +43,6 @@ const link = !BLOG?.post?.disabled ? getPermalink(post.permalink, 'post') : '';
   }
   <div class="mt-2">
     <header>
-      <div class="mb-1">
-        <span class="text-sm">
-          <Icon name="tabler:clock" class="w-3.5 h-3.5 inline-block -mt-0.5 dark:text-gray-400" />
-          <time datetime={String(post.publishDate)}>{getFormattedDate(post.publishDate)}</time>
-          {
-            post.category && (
-              <>
-                {' '}
-                ·{' '}
-                <a class="capitalize hover:underline" href={getPermalink(post.category, 'category')}>
-                  {post.category.replaceAll('-', ' ')}
-                </a>
-              </>
-            )
-          }
-        </span>
-      </div>
       <h2 class="text-xl sm:text-2xl font-bold leading-tight mb-2 font-heading dark:text-slate-300">
         {
           link ? (
@@ -72,8 +55,18 @@ const link = !BLOG?.post?.disabled ? getPermalink(post.permalink, 'post') : '';
         }
       </h2>
     </header>
-
     {post.excerpt && <p class="flex-grow text-muted dark:text-slate-400 text-lg">{post.excerpt}</p>}
+    {
+          link ? (
+            <div class="py-3">
+              <a class="hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200" href={link} >
+                Read more
+              </a>
+            </div>
+          ) : (
+            post.title
+          )
+        }
     <footer class="mt-5">
       <PostTags tags={post.tags} />
     </footer>
