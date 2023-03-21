@@ -1,5 +1,4 @@
 ---
-import { Icon } from 'astro-icon';
 import { Picture } from '@astrojs/image/components';
 
 interface Item {
@@ -31,13 +30,13 @@ const {
 } = Astro.props;
 ---
 
-<section class:list={[{ 'pt-0 md:pt-0': isAfterContent }, 'bg-blue-50 dark:bg-slate-800 py-16 md:py-20']}>
+<section id="aboutme" class:list={[{ 'pt-0 md:pt-0': isAfterContent }, 'bg-blue-50 dark:bg-slate-900 py-16 md:py-20']}>
   <div class="max-w-xl sm:mx-auto lg:max-w-2xl">
     {
       (title || subtitle || highlight) && (
         <div class="mb-10 md:mx-auto text-center md:mb-12 max-w-3xl">
           {highlight && (
-            <p
+            <h1
               class="text-base text-primary dark:text-blue-200 font-semibold tracking-wide uppercase"
               set:html={highlight}
             />
@@ -58,10 +57,10 @@ const {
   </div>
   <div class="mx-auto max-w-7xl p-4 md:px-8">
     <div class={`md:flex ${isReversed ? 'md:flex-row-reverse' : ''} md:gap-16`}>
-      <div class="md:basis-1/2 self-center">
+      <div class="md:basis-9/12 self-center">
         {content && <div class="mb-12 text-lg dark:text-slate-400" set:html={content} />}
 
-        {
+        <!--{
           items && (
             <div class="space-y-8">
               {items.map(({ title: title2, description, icon }) => (
@@ -79,7 +78,7 @@ const {
               ))}
             </div>
           )
-        }
+        }-->
       </div>
       <div aria-hidden="true" class="mt-10 md:mt-0 md:basis-1/2">
         {
